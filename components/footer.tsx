@@ -8,8 +8,8 @@ const Footer = () => {
         <div className="flex flex-col items-center md:flex-row md:justify-between">
           <div className="mb-6 md:mb-0">
             <a href="/" className="flex items-center">
-              <img src="#" className="h-8 mr-3" alt="Logo" />
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">UI Battlegrounds</span>
+              <img src="#" className="h-20 mr-3" alt="Logo" />
+              <span className="self-center text-4xl font-semibold whitespace-nowrap dark:text-white">UI Battlegrounds</span>
             </a>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-6 gap-8 sm:gap-6 text-center md:text-left md:justify-center">

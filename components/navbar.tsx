@@ -16,11 +16,11 @@ const Navbar = () => {
     <nav className="bg-white border-zinc-200 dark:bg-zinc-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="#" className="h-8" alt="Logo" />
+          <img src="#" className="h-12" alt="Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">UI Battlegrounds</span>
         </a>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <Link href="/auth/login" className="text-white bg-zinc-700 hover:bg-zinc-800 focus:ring-4 focus:outline-none focus:ring-zinc-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-zinc-600 dark:hover:bg-zinc-700 dark:focus:ring-zinc-800">
+            <Link href="/auth/login" className="text-white bg-zinc-700 hover:bg-zinc-800 focus:ring-4 focus:outline-none focus:ring-zinc-300 font-medium rounded-lg text-lg px-6 py-2 text-center dark:bg-zinc-600 dark:hover:bg-zinc-700 dark:focus:ring-zinc-800">
                     Login
             </Link>
           <button 
