@@ -31,3 +31,21 @@ body {
     text-wrap: balance;
   }
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.auth-background {
+  z-index: -1;
+  position: fixed;
+  top: 0; /* Ensure it starts from the top of the viewport */
+  left: 0; /* Ensure it starts from the left of the viewport */
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/images/auth-background.png');
+  background-size: cover; /* Scale the image to cover the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent image repetition */
+  background-attachment: fixed; /* Fix the background in place */
+}
