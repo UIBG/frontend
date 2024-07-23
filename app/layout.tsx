@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={montserrat.className}>
         <div className="flex flex-col min-h-screen">
           <Navbar />
-          <div className="flex flex-col items-center justify-center flex-grow py-10 my-10">
+          <div className="flex flex-col items-center justify-center flex-grow">
             {children}
           </div>
           <Footer />
