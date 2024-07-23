@@ -3,7 +3,7 @@ import { FaYoutube, FaInstagram, FaTiktok, FaLinkedin, FaLine } from 'react-icon
 
 const Footer = () => {
   return (
-    <footer className="bg-white dark:bg-zinc-900">
+    <footer className="bg-white dark:bg-primary">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="flex flex-col items-center md:flex-row md:justify-between">
           <div className="mb-6 md:mb-0">
@@ -16,10 +16,10 @@ const Footer = () => {
               <h2 className="mb-6 text-sm font-semibold text-zinc-900 uppercase dark:text-white">More</h2>
               <ul className="text-zinc-500 dark:text-zinc-400 font-medium">
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">uibg</a>
+                  <a href="/contact" className="hover:underline">Contact Us</a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">uibg</a>
+                  <a href="https://www.instagram.com/uibattlegrounds/" className="hover:underline">Latest Update</a>
                 </li>
               </ul>
             </div>
@@ -29,19 +29,19 @@ const Footer = () => {
         <div className="flex flex-col items-center sm:flex-row sm:justify-between">
           <span className="text-sm text-zinc-500 text-center sm:text-left dark:text-zinc-400">© 2024 UI Battlegrounds. All Rights Reserved.</span>
           <div className="flex justify-center mt-4 sm:mt-0 gap-2">
-            <a href="#" className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white mr-5">
+            <a href="https://www.youtube.com/@uibattlegrounds" className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white mr-5">
               <FaYoutube className="w-6 h-6" />
               <span className="sr-only">YouTube Channel</span>
             </a>
-            <a href="#" className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white mr-5">
+            <a href="https://www.instagram.com/uibattlegrounds/" className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white mr-5">
               <FaInstagram className="w-6 h-6" />
               <span className="sr-only">Instagram Account</span>
             </a>
-            <a href="#" className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white mr-5">
+            <a href="https://www.tiktok.com/@uibattlegrounds" className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white mr-5">
               <FaTiktok className="w-6 h-6" />
               <span className="sr-only">Tiktok Account</span>
             </a>
-            <a href="#" className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white mr-5">
+            <a href="https://www.linkedin.com/company/uibg/" className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white mr-5">
               <FaLinkedin className="w-6 h-6" />
               <span className="sr-only">LinkedIn Page</span>
             </a>
