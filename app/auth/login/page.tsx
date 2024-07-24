@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const Login = () => {
   return (
-    <div>
+    <div className="pt-16">
       <LoginComponent />
     </div>
   );
