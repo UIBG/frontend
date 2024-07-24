@@ -1,3 +1,4 @@
+import RegisterComponent from "@/components/auth/register";
 import { Metadata } from "next";
 import React from "react";
 
@@ -6,7 +7,11 @@ export const metadata: Metadata = {
 };
 
 const Register = () => {
-  return <div>Register</div>;
+  return (
+    <div className="pt-16">
+      <RegisterComponent />
+    </div>
+  );
 };
 
 export default Register;

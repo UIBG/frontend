@@ -3,18 +3,18 @@ import Image from 'next/image';
 
 const Hero = () => {
   return (
-    <div className="relative w-full h-screen bg-background_primary overflow-hidden">
+    <div className="relative w-full h-screen bg-primary overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/home/hero-home.svg"
           alt="The Countdown Begins!"
           fill
-          style={{ objectFit: 'cover', opacity: 0.7 }}
+          style={{ objectFit: 'cover', opacity: 1 }}
         />
       </div>
 
-      <div className="absolute inset-0 z-10 flex flex-col items-center">
-        <div className="pt-24 pb-10">
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
+        <div className="pt-24 pb-2 lg:pb-10">
           <Image
             src="/images/home/hero-countdown.svg"
             alt=""

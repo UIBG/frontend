@@ -3,26 +3,26 @@ import Link from 'next/link';
 const LoginComponent = () => {
     return (
         <div className="flex flex-col items-center justify-center flex-grow py-10 my-10">
-            <div className="bg-white shadow-md rounded-xl max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-primary">
+            <div className="bg-primary shadow-md rounded-xl max-w-sm p-4 sm:p-6 lg:p-8">
                 <form className="space-y-6" action="#">
-                    <h3 className="text-xl font-bold text-center text-gray-900 dark:text-white">Login</h3>
+                    <h3 className="text-xl font-bold text-center text-white">Login</h3>
                     
                     <div>
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-300">
                             Your email
                         </label>
                         <input
                             type="email"
                             name="email"
                             id="email"
-                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                            className="bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm p-2.5 placeholder-gray-400"
                             placeholder="email@gmail.com"
                             required
                         />
                     </div>
                     
                     <div>
-                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-300">
                             Your password
                         </label>
                         <input
@@ -30,13 +30,13 @@ const LoginComponent = () => {
                             name="password"
                             id="password"
                             placeholder="••••••••"
-                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                            className="bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm p-2.5 placeholder-gray-400"
                             required
                         />
                     </div>
                     
                     <div className="flex items-center justify-between">
-                        <Link href="#" className="text-sm text-blue_primary hover:underline dark:text-blue-500">
+                        <Link href="#" className="text-sm text-blue-500 hover:underline">
                             Forgot your Password?
                         </Link>
                     </div>
@@ -44,14 +44,14 @@ const LoginComponent = () => {
                     <div className="space-y-3">
                         <button
                             type="submit"
-                            className="w-full text-white bg-blue_primary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue_primary dark:hover:bg-blue_primary dark:focus:ring-blue-800"
+                            className="w-full text-white bg-blue_primary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                         >
                             Login to your account
                         </button>
 
                         <button
                             type="button"
-                            className="w-full text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-300 focus:ring-4 focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:hover:border-gray-500 dark:focus:ring-white"
+                            className="w-full text-white bg-gray-700 border border-gray-600 rounded-lg hover:bg-gray-600 focus:ring-4 focus:ring-white font-medium text-sm px-5 py-2.5 text-center"
                         >
                             <span className="flex items-center justify-center gap-2 font-medium py-1">
                                 <svg
@@ -89,9 +89,9 @@ const LoginComponent = () => {
                         </button>
                     </div>
 
-                    <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
+                    <div className="text-sm font-medium text-gray-300">
                         Not registered?{' '}
-                        <Link href="/auth/register" className="text-blue_primary hover:underline dark:text-blue-500">
+                        <Link href="/auth/register" className="text-blue-500 hover:underline">
                             Create account
                         </Link>
                     </div>
