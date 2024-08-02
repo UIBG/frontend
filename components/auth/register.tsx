@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { register } from '@/app/api/auth';
 import { useRouter } from 'next/navigation';
 
 const RegisterComponent = () => {
@@ -32,41 +31,49 @@ const RegisterComponent = () => {
     const handleRegister = async (event: React.FormEvent) => {
         event.preventDefault();
         let newErrors: string[] = [];
-
+    
         const validateLength = validatePasswordLength(password);
         const validateNumber = validatePasswordNumber(password);
         const validateUpper = validatePasswordUpperCase(password);
-        
+    
         if (!validateLength) {
-            newErrors.push('• Must be 8-20 characters long');
+          newErrors.push('• Must be 8-20 characters long');
         }
         if (!validateNumber) {
-            newErrors.push('• Must contain at least one number');
+          newErrors.push('• Must contain at least one number');
         }
         if (!validateUpper) {
-            newErrors.push('• Must contain at least one uppercase letter');
+          newErrors.push('• Must contain at least one uppercase letter');
         }
         if (password !== confirmPassword) {
-            newErrors.push('• Passwords do not match');
+          newErrors.push('• Passwords do not match');
         }
-
+    
         if (newErrors.length > 0) {
-            setErrors(newErrors);
-            return;
+          setErrors(newErrors);
+          return;
         }
-
+    
         setErrors([]);
-
+    
         try {
-            const response = await register(username, email, password);
-            if (response.ok){
-                // console.log('Register successful:', response);
-                setShowModal(true);
-            }
+          const response = await fetch('/api/auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, email, password, type: 'register' }),
+          });
+    
+          const data = await response.json();
+          if (response.ok) {
+            setShowModal(true);
+          } else {
+            setErrors([data.message]);
+          }
         } catch (error) {
-            console.error('Register failed:', error);
+          console.error('Register failed:', error);
+          setErrors(['Registration failed. Please try again later.']);
         }
-    };
+      };
 
     return (
         <div className="flex flex-col items-center justify-center flex-grow py-10 my-10">

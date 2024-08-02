@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { login } from '@/app/api/auth';
 import { useRouter } from 'next/navigation';
 
 const LoginComponent = () => {
@@ -16,21 +15,24 @@ const LoginComponent = () => {
         setError(null);
     
         try {
-            const response = await login(username, password);
-            if (response.token) {
-                localStorage.setItem("token", response.token);
-                console.log("localstorage token:", localStorage.getItem("token"));
-
-                setShowModal(true);
-            } else {
-                throw new Error('Invalid token received');
-            }
+          const response = await fetch('/api/auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password, type: 'login' }),
+          });
     
+          const data = await response.json();
+          if (response.ok && data.token) {
+            localStorage.setItem('token', data.token);
+            setShowModal(true);
+          } else {
+            throw new Error('Invalid credentials');
+          }
         } catch (error) {
-            console.error('Login failed:', error);
-            setError('Your username or password is incorrect');
+          console.error('Login failed:', error);
+          setError('Your username or password is incorrect');
         }
-    }
+      };
     
 
     return (
