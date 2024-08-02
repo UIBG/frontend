@@ -7,9 +7,6 @@ export async function POST(request: Request) {
   const { username, email, password, type } = await request.json();
 
   let apiEndpoint = `${API_URL}/register`;
-  if (type === 'login') {
-    apiEndpoint = `${API_URL}/authenticate`;
-  }
 
   const response = await fetch(apiEndpoint, {
     method: 'POST',
