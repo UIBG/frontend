@@ -89,3 +89,31 @@ body {
 .flicker {
   animation: flicker 0.6s ease-out 0s 5;
 }
+
+.about-background {
+  z-index: -1;
+  position: relative;
+  top: 0; 
+  left: 0; 
+  width: 1470;
+  height: 475;
+  background-image: url('/images/about-background.svg');
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-attachment: fixed;
+}
+
+.contact-background {
+  z-index: -1;
+  position: relative;
+  top: 0; 
+  left: 0; 
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/images/about-background.svg');
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-attachment: fixed;
+}
