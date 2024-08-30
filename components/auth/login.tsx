@@ -15,7 +15,7 @@ const LoginComponent = () => {
         setError(null);
     
         try {
-          const response = await fetch("backend-production-fd6d.up.railway.app/api/v1/auth/authenticate", {
+          const response = await fetch("https://backend-production-fd6d.up.railway.app/api/v1/auth/authenticate", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password, }),
