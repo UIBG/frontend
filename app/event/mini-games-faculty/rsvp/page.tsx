@@ -65,7 +65,7 @@ const Rsvp = () => {
 
     return (
         <div className="flex flex-col items-center justify-center flex-grow py-4 mt-24 mb-4 w-full rsvp-background">
-            <div className="bg-primary shadow-md rounded-xl w-1/3 p-4 sm:p-6 lg:p-8">
+            <div className="bg-primary shadow-md rounded-xl w-5/6 md:w-1/2 lg:w-1/3 p-4 sm:p-6 lg:p-8">
                 <form className="space-y-6" onSubmit={handleRegister}>
                     <h3 className="text-xl font-bold text-center text-white">RSVP Minigames</h3>
 
