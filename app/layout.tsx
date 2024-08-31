@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.className} ${racingSansOne.className}`}>
+      <body className={montserrat.className}>
         <div className="flex flex-col min-h-screen">
           <Navbar />
           <div className="flex flex-col items-center justify-center flex-grow">
