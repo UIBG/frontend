@@ -1,15 +1,33 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { FaBars } from 'react-icons/fa';
-import { usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    console.log("Token:", token);
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    router.push('/auth/login');
+    setIsLoggedIn(false);
   };
 
   return (
@@ -29,9 +47,18 @@ const Navbar = () => {
             <span className="sr-only">Menu Button</span>
             <FaBars className="w-10 h-10" />
           </button>
-          <Link href="/auth/login" className={`hidden md:inline-flex text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-lg px-6 py-2 text-center bg-zinc-600 hover:bg-zinc-700 focus:ring-zinc-800`}>
-            Login
-          </Link>
+          {isLoggedIn ? (
+            <button 
+              onClick={handleLogout} 
+              className="hidden md:inline-flex text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-lg px-6 py-2 text-center bg-red_primary hover:bg-red_secondary focus:ring-red_tertiary"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link href="/auth/login" className={`hidden md:inline-flex text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-lg px-6 py-2 text-center bg-zinc-600 hover:bg-zinc-700 focus:ring-zinc-800`}>
+              Login
+            </Link>
+          )}
         </div>
         <div className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${isOpen ? 'block text-center' : 'hidden'}`} id="navbar-cta">
           <ul className="flex flex-col font-bold p-4 md:p-0 mt-4 border rounded-lg bg-zinc-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 bg-zinc-800 md:bg-primary border-zinc-700">
@@ -47,11 +74,22 @@ const Navbar = () => {
             <li>
               <Link href="/contact" className={`block py-2 px-3 md:p-0 rounded md:hover:text-zinc-700 md:hover:text-zinc-500 text-white hover:bg-zinc-700 hover:text-white md:hover:bg-transparent border-zinc-700`} aria-current={pathname === '/contact' ? 'page' : undefined}>Contact</Link>
             </li>
-            <li className="md:hidden">
-              <Link href="/auth/login" className="text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-lg px-6 py-2 text-center bg-tertiary hover:bg-zinc-700 focus:ring-zinc-800">
-                Login
-              </Link>
-            </li>
+            {!isLoggedIn ? (
+              <li className="md:hidden">
+                <Link href="/auth/login" className="text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-lg px-6 py-2 text-center bg-tertiary hover:bg-zinc-700 focus:ring-zinc-800">
+                  Login
+                </Link>
+              </li>
+            ) : (
+              <li className="md:hidden">
+                <button 
+                  onClick={handleLogout} 
+                  className="text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-lg px-6 py-2 text-center bg-red_primary hover:bg-red_secondary focus:ring-red_tertiary"
+                >
+                  Logout
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </div>
