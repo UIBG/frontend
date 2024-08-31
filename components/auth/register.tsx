@@ -62,6 +62,11 @@ const RegisterComponent = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, email, password, }),
           });
+
+          if (response.status === 403) {
+            setErrors(['Username or email already used.']);
+            return;
+          }
     
           const data = await response.json();
           if (response.ok) {
