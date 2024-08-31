@@ -20,7 +20,12 @@ const LoginComponent = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password, }),
           });
-    
+          
+          if (response.status === 403) {
+            setError('You have not registered.');
+            return;
+          }
+
           const data = await response.json();
           if (response.ok && data.token) {
             localStorage.setItem('token', data.token);
