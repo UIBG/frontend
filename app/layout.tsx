@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Montserrat, Racing_Sans_One } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
+const racingSansOne = Racing_Sans_One({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
   title: {

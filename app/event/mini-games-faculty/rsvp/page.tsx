@@ -1,0 +1,218 @@
+'use client';
+import React, { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
+import { jwtDecode } from "jwt-decode";
+
+const Rsvp = () => {
+    const [name, setName] = useState('');
+    const [faculty, setFaculty] = useState('');
+    const [major, setMajor] = useState('');
+    const [batch, setBatch] = useState<number | ''>('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [errors, setErrors] = useState<string[]>([]);
+    const [showModal, setShowModal] = useState(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setName(localStorage.getItem('name') || '');
+            setFaculty(localStorage.getItem('faculty') || '');
+            setMajor(localStorage.getItem('major') || '');
+            setBatch(parseInt(localStorage.getItem('batch') || '') || '');
+            setPhoneNumber(localStorage.getItem('phoneNumber') || '');
+        }
+    }, []);
+
+    const handleInputChange = (key: string, value: string) => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(key, value);
+        }
+    };
+
+    const handleRegister = async (event: React.FormEvent) => {
+        event.preventDefault();
+        let newErrors: string[] = [];
+    
+        try {
+          const formData = new FormData();
+          formData.append('name', name);
+          formData.append('faculty', faculty);
+          formData.append('major', major);
+          formData.append('batch', batch.toString());
+          formData.append('phoneNumber', phoneNumber);
+          if (imageFile) {
+              formData.append('imageFile', imageFile);
+          }
+
+          const response = await fetch('https://backend-production-fd6d.up.railway.app/api/tournaments/', {
+            method: 'POST',
+            body: formData,
+          });
+    
+          const data = await response.json();
+          if (response.ok) {
+            setShowModal(true);
+            localStorage.clear();
+          } else {
+            setErrors([data.message]);
+          }
+        } catch (error) {
+          console.error('Register failed:', error);
+          setErrors(['Registration failed. Please try again later.']);
+        }
+    };
+
+    return (
+        <div className="flex flex-col items-center justify-center flex-grow py-4 mt-24 mb-4 w-full rsvp-background">
+            <div className="bg-primary shadow-md rounded-xl w-5/6 md:w-1/2 lg:w-1/3 p-4 sm:p-6 lg:p-8">
+                <form className="space-y-6" onSubmit={handleRegister}>
+                    <h3 className="text-xl font-bold text-center text-white">RSVP Minigames</h3>
+
+                    <div>
+                        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-300">
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            className="bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm p-2.5 placeholder-gray-400"
+                            placeholder="Your name"
+                            value={name}
+                            onChange={(e) => {
+                                setName(e.target.value);
+                                handleInputChange('name', e.target.value);
+                                }
+                            }
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="faculty" className="block mb-2 text-sm font-medium text-gray-300">
+                            Faculty
+                        </label>
+                        <input
+                            type="text"
+                            name="faculty"
+                            id="faculty"
+                            className="bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm p-2.5 placeholder-gray-400"
+                            placeholder="Faculty"
+                            value={faculty}
+                            onChange={(e) => {
+                                setFaculty(e.target.value);
+                                handleInputChange('faculty', e.target.value);
+                                }
+                            }
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="major" className="block mb-2 text-sm font-medium text-gray-300">
+                            Major
+                        </label>
+                        <input
+                            type="text"
+                            name="major"
+                            id="major"
+                            placeholder="Major"
+                            className="bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm p-2.5 placeholder-gray-400"
+                            value={major}
+                            onChange={(e) => {
+                                setMajor(e.target.value);
+                                handleInputChange('major', e.target.value);
+                                }
+                            }
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="batch" className="block mb-2 text-sm font-medium text-gray-300">
+                            Batch
+                        </label>
+                        <input
+                            type="text"
+                            name="batch"
+                            id="batch"
+                            placeholder="Batch"
+                            className="bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm p-2.5 placeholder-gray-400"
+                            value={batch}
+                            onChange={(e) => {
+                                const batchValue = Number(e.target.value);
+                                setBatch(batchValue);
+                                handleInputChange('batch', batchValue.toString());
+                                }
+                            }
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="phoneNumber" className="block mb-2 text-sm font-medium text-gray-300">
+                            Phone Number
+                        </label>
+                        <input
+                            type="text"
+                            name="phoneNumber"
+                            id="phoneNumber"
+                            className="bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm p-2.5 placeholder-gray-400"
+                            placeholder="Phone Number"
+                            value={phoneNumber}
+                            onChange={(e) => {
+                                setPhoneNumber(e.target.value);
+                                handleInputChange('phoneNumber', e.target.value);
+                                }
+                            }
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="imageFile" className="block mb-2 text-sm font-medium text-gray-300">
+                            Upload Image
+                        </label>
+                        <input
+                            type="file"
+                            name="imageFile"
+                            id="imageFile"
+                            className="bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm p-2.5 placeholder-gray-400"
+                            onChange={(e) => setImageFile(e.target.files ? e.target.files[0] : null)}
+                            required
+                        />
+                    </div>
+
+                    <div className="space-y-3">
+                        <button
+                            type="submit"
+                            className="w-full text-white bg-blue_primary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                        >
+                            Register Now
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            {showModal && (
+                <div id="successModal" tabIndex={-1} aria-hidden="true" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
+                    <div className="relative p-4 w-full max-w-md">
+                        <div className="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                            <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900 p-2 flex items-center justify-center mx-auto mb-3.5">
+                                <svg aria-hidden="true" className="w-8 h-8 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path></svg>
+                                <span className="sr-only">Success</span>
+                            </div>
+                            <p className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Register successful!</p>
+                            <button onClick={() => router.push('/')} type="button" className="py-2 px-3 text-sm font-medium text-center text-white rounded-lg bg-blue_primary hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:focus:ring-primary-900">
+                                Ok
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>   
+  );
+};
+
+export default Rsvp;
