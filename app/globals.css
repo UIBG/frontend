@@ -4,15 +4,15 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-start-rgb: 18, 18, 18;
+  --background-end-rgb: 18, 18, 18;  
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-start-rgb: 18, 18, 18;
+    --background-end-rgb: 18, 18, 18;  
   }
 }
 
@@ -116,4 +116,59 @@ body {
   background-position: center; 
   background-repeat: no-repeat; 
   background-attachment: fixed;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: auto;
+  max-width: 1200px;
+  padding: 20px;
+}
+
+.gridItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gridImage {
+  width: 100%;
+  height: auto;
+}
+
+/* Responsive Layout */
+@media (max-width: 1024px) {
+  .gridContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .gridContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.rsvp-background {
+  z-index: -1;
+  position: relative;
+  top: 0; 
+  left: 0; 
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/images/event/mini-games-faculty/rsvp-background.svg');
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-attachment: fixed;
+}
+
+.header-title {
+  font-family: 'Racing Sans One', sans-serif;
+}
+
+.body-text {
+  font-family: 'Montserrat', sans-serif;
 }

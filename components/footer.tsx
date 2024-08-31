@@ -45,7 +45,7 @@ const Footer = () => {
               <FaLinkedin className="w-6 h-6" />
               <span className="sr-only">LinkedIn Page</span>
             </a>
-            <a href="#" className="text-zinc-400 hover:text-white">
+            <a href="https://line.me/R/ti/p/@125nizth" className="text-zinc-400 hover:text-white">
               <FaLine className="w-6 h-6" />
               <span className="sr-only">Line Official Account</span>
             </a>
