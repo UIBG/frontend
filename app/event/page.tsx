@@ -27,7 +27,7 @@ const Event = () => {
       <div className="flex justify-center mt-2 md:mt-4 lg:mt-6">
         <button
           onClick={handleRSVPClick}
-          className="bg-red_primary text-white text-xs font-bold py-1 px-2 md:text-base md:py-2 md:px-6 lg:text-2xl lg:py-4 lg:px-10 rounded"
+          className="bg-red_primary text-white text-xs font-bold py-2 px-6 md:text-base md:py-2 md:px-6 lg:text-2xl lg:py-4 lg:px-10 rounded"
         >
           RSVP Now
         </button>

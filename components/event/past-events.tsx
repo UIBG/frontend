@@ -9,10 +9,15 @@ const PastEvents = () => {
             <Image 
                 src="images/event/past-events.svg"
                 alt="Past Events"
-                width={350}
+                width={150}
                 height={70}
+                className="
+                    sm:w-[150px] sm:h-auto 
+                    md:w-[250px] md:h-auto 
+                    lg:w-[350px] lg:h-auto
+                "
             />
-            <div className="max-w-sm text-center text-sm my-2 md:max-w-full lg:max-w-full md:my-4 lg:my-4 md:text-base lg:text-base">
+            <div className="max-w-sm text-center text-xs my-1 md:max-w-full lg:max-w-full md:my-4 lg:my-4 md:text-base lg:text-base">
                 <p>
                 Catch the buzz from our past events! Dive into photos that capture the excitement and competition!
                 </p>
