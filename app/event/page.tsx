@@ -9,7 +9,7 @@ const Event = () => {
   const router = useRouter();
 
   const handleRSVPClick = () => {
-    router.push("event/mini-games-faculty/rsvp");
+    router.push("event/mini-games-faculty/select-tournament");
   };
   return (
     <div>
