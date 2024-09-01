@@ -20,9 +20,13 @@ export default function ImageGrid() {
           <Image 
             src={image} 
             alt={`Event Image ${index + 1}`} 
-            width={400} 
-            height={266} 
-            className="gridImage" 
+            width={200}
+            height={150}
+            className="gridImage
+              sm:w-[200px] sm:h-auto 
+              md:w-[300px] md:h-auto 
+              lg:w-[400px] lg:h-auto
+            " 
           />
         </div>
       ))}
