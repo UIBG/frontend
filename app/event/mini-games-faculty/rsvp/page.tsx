@@ -1,7 +1,8 @@
 'use client';
 import React, { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Faculty, Major } from "@/app/utils/type";
+import { jwtDecode } from "jwt-decode";
 
 const Rsvp = () => {
     const [name, setName] = useState('');
@@ -16,7 +17,10 @@ const Rsvp = () => {
     const [selectedMajor, setSelectedMajor] = useState('');
     const [errors, setErrors] = useState<string[]>([]);
     const [showModal, setShowModal] = useState(false);
+    const searchParams = useSearchParams();
     const router = useRouter();
+
+    const tournamentId = searchParams.get('tournamentId');  
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -43,7 +47,7 @@ const Rsvp = () => {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                // Assuming data is in the format you provided
+
                 const formattedData = data.map((faculty: any) => ({
                     facultyId: faculty.facultyId,
                     facultyName: faculty.facultyName,
@@ -65,7 +69,6 @@ const Rsvp = () => {
         const facultyId = e.target.value;
         setSelectedFaculty(facultyId);
         
-        // Find the selected faculty's data
         const selectedFaculty = faculties.find(faculty => faculty.facultyId === facultyId);
         if (selectedFaculty) {
             setMajors(selectedFaculty.majorList);
@@ -100,24 +103,30 @@ const Rsvp = () => {
             }
 
             const token = localStorage.getItem('token');
-            const response = await fetch('https://backend-production-fd6d.up.railway.app/api/tournaments', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: formData,
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                setShowModal(true);
-                sessionStorage.removeItem('name');
-                sessionStorage.removeItem('faculty');
-                sessionStorage.removeItem('major');
-                sessionStorage.removeItem('batch');
-                sessionStorage.removeItem('phoneNumber');
-            } else {
-                setErrors([data.message]);
+            if (token) {
+                const decodedToken: any = jwtDecode(token);
+                const userId = decodedToken.sub;
+                
+                console.log("User id: " + userId)
+            
+                const response = await fetch(`https://backend-production-fd6d.up.railway.app/api/tournaments/${tournamentId}/register/${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: formData,
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    setShowModal(true);
+                    sessionStorage.removeItem('name');
+                    sessionStorage.removeItem('faculty');
+                    sessionStorage.removeItem('major');
+                    sessionStorage.removeItem('batch');
+                    sessionStorage.removeItem('phoneNumber');
+                } else {
+                    setErrors([data.message]);
+                }
             }
         } catch (error) {
             console.error('Register failed:', error);
@@ -125,11 +134,12 @@ const Rsvp = () => {
         }
     };
 
+
     return (
         <div className="flex flex-col items-center justify-center flex-grow py-4 mt-24 mb-4 w-full rsvp-background">
             <div className="bg-primary shadow-md rounded-xl w-5/6 md:w-1/2 lg:w-1/3 p-4 sm:p-6 lg:p-8">
                 <form className="space-y-6" onSubmit={handleRegister}>
-                    <h3 className="text-xl font-bold text-center text-white">RSVP Minigames</h3>
+                    <h3 className="text-xl font-bold text-center text-white">RSVP Mini Games</h3>
 
 
                     <div>
