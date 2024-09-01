@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
-import { jwtDecode } from "jwt-decode";
+import { Faculty, Major } from "@/app/utils/type";
 
 const Rsvp = () => {
     const [name, setName] = useState('');
@@ -10,56 +10,118 @@ const Rsvp = () => {
     const [batch, setBatch] = useState<number | ''>('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [faculties, setFaculties] = useState<Faculty[]>([]);
+    const [majors, setMajors] = useState<Major[]>([]);
+    const [selectedFaculty, setSelectedFaculty] = useState('');
+    const [selectedMajor, setSelectedMajor] = useState('');
     const [errors, setErrors] = useState<string[]>([]);
     const [showModal, setShowModal] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            setName(localStorage.getItem('name') || '');
-            setFaculty(localStorage.getItem('faculty') || '');
-            setMajor(localStorage.getItem('major') || '');
-            setBatch(parseInt(localStorage.getItem('batch') || '') || '');
-            setPhoneNumber(localStorage.getItem('phoneNumber') || '');
+            setName(sessionStorage.getItem('name') || '');
+            setFaculty(sessionStorage.getItem('faculty') || '');
+            setMajor(sessionStorage.getItem('major') || '');
+            setBatch(parseInt(sessionStorage.getItem('batch') || '') || '');
+            setPhoneNumber(sessionStorage.getItem('phoneNumber') || '');
         }
     }, []);
 
+    useEffect(() => {
+        const fetchFaculties = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('https://backend-production-fd6d.up.railway.app/api/faculty-major/faculties', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                // Assuming data is in the format you provided
+                const formattedData = data.map((faculty: any) => ({
+                    facultyId: faculty.facultyId,
+                    facultyName: faculty.facultyName,
+                    majorList: faculty.majorList.map((major: any) => ({
+                        majorId: major.majorId,
+                        majorName: major.majorName
+                    }))
+                }));
+                setFaculties(formattedData);
+            } catch (error) {
+                console.error('Error fetching faculties:', error);
+            }
+        };
+    
+        fetchFaculties();
+    }, []);
+
+    const handleFacultyChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const facultyId = e.target.value;
+        setSelectedFaculty(facultyId);
+        
+        // Find the selected faculty's data
+        const selectedFaculty = faculties.find(faculty => faculty.facultyId === facultyId);
+        if (selectedFaculty) {
+            setMajors(selectedFaculty.majorList);
+        } else {
+            setMajors([]);
+        }
+    }; 
+
+    const handleMajorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedMajor(e.target.value);
+    };    
+
     const handleInputChange = (key: string, value: string) => {
         if (typeof window !== 'undefined') {
-            localStorage.setItem(key, value);
+            sessionStorage.setItem(key, value);
         }
     };
 
     const handleRegister = async (event: React.FormEvent) => {
         event.preventDefault();
         let newErrors: string[] = [];
-    
-        try {
-          const formData = new FormData();
-          formData.append('name', name);
-          formData.append('faculty', faculty);
-          formData.append('major', major);
-          formData.append('batch', batch.toString());
-          formData.append('phoneNumber', phoneNumber);
-          if (imageFile) {
-              formData.append('imageFile', imageFile);
-          }
 
-          const response = await fetch('https://backend-production-fd6d.up.railway.app/api/tournaments/', {
-            method: 'POST',
-            body: formData,
-          });
-    
-          const data = await response.json();
-          if (response.ok) {
-            setShowModal(true);
-            localStorage.clear();
-          } else {
-            setErrors([data.message]);
-          }
+        try {
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('faculty', faculty);
+            formData.append('major', major);
+            formData.append('batch', batch.toString());
+            formData.append('phoneNumber', phoneNumber);
+            if (imageFile) {
+                formData.append('imageFile', imageFile);
+            }
+
+            const token = localStorage.getItem('token');
+            const response = await fetch('https://backend-production-fd6d.up.railway.app/api/tournaments', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: formData,
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                setShowModal(true);
+                sessionStorage.removeItem('name');
+                sessionStorage.removeItem('faculty');
+                sessionStorage.removeItem('major');
+                sessionStorage.removeItem('batch');
+                sessionStorage.removeItem('phoneNumber');
+            } else {
+                setErrors([data.message]);
+            }
         } catch (error) {
-          console.error('Register failed:', error);
-          setErrors(['Registration failed. Please try again later.']);
+            console.error('Register failed:', error);
+            setErrors(['Registration failed. Please try again later.']);
         }
     };
 
@@ -68,6 +130,7 @@ const Rsvp = () => {
             <div className="bg-primary shadow-md rounded-xl w-5/6 md:w-1/2 lg:w-1/3 p-4 sm:p-6 lg:p-8">
                 <form className="space-y-6" onSubmit={handleRegister}>
                     <h3 className="text-xl font-bold text-center text-white">RSVP Minigames</h3>
+
 
                     <div>
                         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-300">
@@ -83,8 +146,7 @@ const Rsvp = () => {
                             onChange={(e) => {
                                 setName(e.target.value);
                                 handleInputChange('name', e.target.value);
-                                }
-                            }
+                            }}
                             required
                         />
                     </div>
@@ -93,41 +155,44 @@ const Rsvp = () => {
                         <label htmlFor="faculty" className="block mb-2 text-sm font-medium text-gray-300">
                             Faculty
                         </label>
-                        <input
-                            type="text"
+                        <select
                             name="faculty"
                             id="faculty"
                             className="bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm p-2.5 placeholder-gray-400"
-                            placeholder="Faculty"
-                            value={faculty}
-                            onChange={(e) => {
-                                setFaculty(e.target.value);
-                                handleInputChange('faculty', e.target.value);
-                                }
-                            }
+                            value={selectedFaculty}
+                            onChange={handleFacultyChange}
                             required
-                        />
+                        >
+                            <option value="" disabled>Select a faculty</option>
+                            {faculties.map(faculty => (
+                                <option key={faculty.facultyId} value={faculty.facultyId}>
+                                    {faculty.facultyName}
+                                </option>
+                            ))}
+                        </select>
                     </div>
 
                     <div>
                         <label htmlFor="major" className="block mb-2 text-sm font-medium text-gray-300">
                             Major
                         </label>
-                        <input
-                            type="text"
+                        <select
                             name="major"
                             id="major"
-                            placeholder="Major"
                             className="bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm p-2.5 placeholder-gray-400"
-                            value={major}
-                            onChange={(e) => {
-                                setMajor(e.target.value);
-                                handleInputChange('major', e.target.value);
-                                }
-                            }
+                            value={selectedMajor}
+                            onChange={handleMajorChange}
                             required
-                        />
+                        >
+                            <option value="" disabled>Select a major</option>
+                            {majors.map(major => (
+                                <option key={major.majorId} value={major.majorId}>
+                                    {major.majorName}
+                                </option>
+                            ))}
+                        </select>
                     </div>
+
 
                     <div>
                         <label htmlFor="batch" className="block mb-2 text-sm font-medium text-gray-300">
@@ -144,8 +209,7 @@ const Rsvp = () => {
                                 const batchValue = Number(e.target.value);
                                 setBatch(batchValue);
                                 handleInputChange('batch', batchValue.toString());
-                                }
-                            }
+                            }}
                             required
                         />
                     </div>
@@ -164,8 +228,7 @@ const Rsvp = () => {
                             onChange={(e) => {
                                 setPhoneNumber(e.target.value);
                                 handleInputChange('phoneNumber', e.target.value);
-                                }
-                            }
+                            }}
                             required
                         />
                     </div>

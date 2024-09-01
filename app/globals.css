@@ -152,7 +152,6 @@ body {
 }
 
 .rsvp-background {
-  z-index: -1;
   position: relative;
   top: 0; 
   left: 0; 
