@@ -10,7 +10,7 @@ const SelectTournament = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
-            router.push('/login');
+            router.push('/auth/login');
         } else {
             fetchTournaments(token);
         }
