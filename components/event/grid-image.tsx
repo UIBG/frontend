@@ -2,14 +2,14 @@
 import Image from 'next/image';
 
 const images = [
-  '/images/event/grid-image/DSC_0034.jpg',
-  '/images/event/grid-image/DSC_0158.jpg',
-  '/images/event/grid-image/DSC_0260.jpg',
-  '/images/event/grid-image/DSC_0429.jpg',
-  '/images/event/grid-image/DSC_0453.jpg',
-  '/images/event/grid-image/DSC_0462.jpg',
-  '/images/event/grid-image/DSC_0466.jpg',
-  '/images/event/grid-image/DSC_0474.jpg',
+  '/images/event/grid-image/DSC_0034.svg',
+  '/images/event/grid-image/DSC_0158.svg',
+  '/images/event/grid-image/DSC_0260.svg',
+  '/images/event/grid-image/DSC_0429.svg',
+  '/images/event/grid-image/DSC_0453.svg',
+  '/images/event/grid-image/DSC_0462.svg',
+  '/images/event/grid-image/DSC_0466.svg',
+  '/images/event/grid-image/DSC_0474.svg',
 ];
 
 export default function ImageGrid() {
@@ -21,7 +21,7 @@ export default function ImageGrid() {
             src={image} 
             alt={`Event Image ${index + 1}`} 
             width={400} 
-            height={300} 
+            height={266} 
             className="gridImage" 
           />
         </div>
