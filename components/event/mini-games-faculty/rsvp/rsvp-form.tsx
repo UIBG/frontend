@@ -106,8 +106,6 @@ const RsvpForm = () => {
             if (token) {
                 const decodedToken: any = jwtDecode(token);
                 const userId = decodedToken.userId;
-                
-                console.log("User id: " + userId)
             
                 const response = await fetch(`https://backend-production-fd6d.up.railway.app/api/tournaments/${tournamentId}/register/${userId}`, {
                     method: 'POST',
@@ -116,16 +114,6 @@ const RsvpForm = () => {
                     },
                     body: formData,
                 });
-
-                console.log('Response Status:', response.status);
-                console.log('Response Headers:', [...response.headers.entries()]);
-
-                if (!response.ok) {
-                    const responseText = await response.text(); // read as text
-                    console.error('Error response:', responseText);
-                    setErrors([`Error ${response.status}: ${responseText}`]);
-                    return;
-                }
 
                 const data = await response.json();
                 if (response.ok) {
