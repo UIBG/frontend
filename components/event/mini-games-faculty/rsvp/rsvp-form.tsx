@@ -10,7 +10,7 @@ const RsvpForm = () => {
     const [major, setMajor] = useState('');
     const [batch, setBatch] = useState<number | ''>('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [image, setImage] = useState<File | null>(null);
     const [faculties, setFaculties] = useState<Faculty[]>([]);
     const [majors, setMajors] = useState<Major[]>([]);
     const [selectedFaculty, setSelectedFaculty] = useState('');
@@ -98,14 +98,14 @@ const RsvpForm = () => {
             formData.append('major', major);
             formData.append('batch', batch.toString());
             formData.append('phoneNumber', phoneNumber);
-            if (imageFile) {
-                formData.append('imageFile', imageFile);
+            if (image) {
+                formData.append('image', image);
             }
 
             const token = localStorage.getItem('token');
             if (token) {
                 const decodedToken: any = jwtDecode(token);
-                const userId = decodedToken.sub;
+                const userId = decodedToken.userId;
                 
                 console.log("User id: " + userId)
             
@@ -116,6 +116,17 @@ const RsvpForm = () => {
                     },
                     body: formData,
                 });
+
+                console.log('Response Status:', response.status);
+                console.log('Response Headers:', [...response.headers.entries()]);
+
+                if (!response.ok) {
+                    const responseText = await response.text(); // read as text
+                    console.error('Error response:', responseText);
+                    setErrors([`Error ${response.status}: ${responseText}`]);
+                    return;
+                }
+
                 const data = await response.json();
                 if (response.ok) {
                     setShowModal(true);
@@ -245,15 +256,15 @@ const RsvpForm = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="imageFile" className="block mb-2 text-sm font-medium text-gray-300">
+                            <label htmlFor="image" className="block mb-2 text-sm font-medium text-gray-300">
                                 Upload Image
                             </label>
                             <input
                                 type="file"
-                                name="imageFile"
-                                id="imageFile"
+                                name="image"
+                                id="image"
                                 className="bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm p-2.5 placeholder-gray-400"
-                                onChange={(e) => setImageFile(e.target.files ? e.target.files[0] : null)}
+                                onChange={(e) => setImage(e.target.files ? e.target.files[0] : null)}
                                 required
                             />
                         </div>
