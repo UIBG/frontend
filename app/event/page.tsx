@@ -13,7 +13,7 @@ const Event = () => {
   };
   return (
     <div>
-      <div>
+      <div className="flex flex-col mt-20">
         <Hero />
       </div>
       <div className="relative">
@@ -21,7 +21,7 @@ const Event = () => {
           src="/images/event/mini-games.svg"
           alt="RSVP Mini Games in Faculty Now!"
           width={1470}
-          height={600} 
+          height={600}
         />
       </div>
       <div className="flex justify-center mt-2 md:mt-4 lg:mt-6">

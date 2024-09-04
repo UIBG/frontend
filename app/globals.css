@@ -124,7 +124,7 @@ body {
   gap: 10px;
   margin: auto;
   max-width: 1200px;
-  padding: 20px;
+  padding: 10px;
 }
 
 .gridItem {
@@ -134,7 +134,7 @@ body {
 }
 
 .gridImage {
-  width: 100%;
+  width: 80%;
   height: auto;
 }
 
