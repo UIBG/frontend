@@ -10,7 +10,7 @@ const RsvpForm = () => {
     const [major, setMajor] = useState('');
     const [batch, setBatch] = useState<number | ''>('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [image, setImage] = useState<File | null>(null);
+    const [imageFile, setImage] = useState<File | null>(null);
     const [faculties, setFaculties] = useState<Faculty[]>([]);
     const [majors, setMajors] = useState<Major[]>([]);
     const [selectedFaculty, setSelectedFaculty] = useState('');
@@ -92,21 +92,33 @@ const RsvpForm = () => {
         let newErrors: string[] = [];
 
         try {
+            const participant = {
+                name: name,
+                faculty: faculty,
+                major: major,
+                batch: batch.toString(),
+                phoneNumber: phoneNumber
+            };
+    
+            // const formData = new FormData();
+            // formData.append('participant', new Blob([JSON.stringify(participant)], { type: 'application/json' }));
+
             const formData = new FormData();
-            formData.append('name', name);
-            formData.append('faculty', faculty);
-            formData.append('major', major);
-            formData.append('batch', batch.toString());
-            formData.append('phoneNumber', phoneNumber);
-            if (image) {
-                formData.append('image', image);
+            for (const [key, value] of Object.entries(participant)) {
+              formData.append(key, value);
+            }
+
+            if (imageFile) {
+                formData.append('image', imageFile);
             }
 
             const token = localStorage.getItem('token');
             if (token) {
                 const decodedToken: any = jwtDecode(token);
                 const userId = decodedToken.userId;
-            
+                console.log('Token:', token);
+                console.log('Decoded Token:', decodedToken);
+
                 const response = await fetch(`https://backend-production-fd6d.up.railway.app/api/tournaments/${tournamentId}/register/${userId}`, {
                     method: 'POST',
                     headers: {
@@ -125,6 +137,7 @@ const RsvpForm = () => {
                     sessionStorage.removeItem('phoneNumber');
                 } else {
                     setErrors([data.message]);
+                    console.error('Server responded with error:', response.status);
                 }
             }
         } catch (error) {
@@ -244,13 +257,13 @@ const RsvpForm = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="image" className="block mb-2 text-sm font-medium text-gray-300">
+                            <label htmlFor="imageFile" className="block mb-2 text-sm font-medium text-gray-300">
                                 Upload Image
                             </label>
                             <input
                                 type="file"
-                                name="image"
-                                id="image"
+                                name="imageFile"
+                                id="imageFile"
                                 className="bg-gray-600 border border-gray-500 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm p-2.5 placeholder-gray-400"
                                 onChange={(e) => setImage(e.target.files ? e.target.files[0] : null)}
                                 required
