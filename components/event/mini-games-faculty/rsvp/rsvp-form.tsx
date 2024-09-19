@@ -72,13 +72,20 @@ const RsvpForm = () => {
         const selectedFaculty = faculties.find(faculty => faculty.facultyId === facultyId);
         if (selectedFaculty) {
             setMajors(selectedFaculty.majorList);
+            setFaculty(selectedFaculty.facultyName); 
         } else {
             setMajors([]);
         }
     }; 
 
     const handleMajorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedMajor(e.target.value);
+        const majorId = e.target.value;
+        setSelectedMajor(majorId);
+    
+        const selectedMajorObj = majors.find(major => major.majorId === majorId);
+        if (selectedMajorObj) {
+            setMajor(selectedMajorObj.majorName); 
+        }
     };    
 
     const handleInputChange = (key: string, value: string) => {
