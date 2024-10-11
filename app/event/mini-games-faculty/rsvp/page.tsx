@@ -10,6 +10,8 @@
 //     );
 // };
 //
+'use client';
+import React from 'react';
 
 const Rsvp = () => {
     return <div>RSVP Page Content</div>;
