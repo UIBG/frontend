@@ -36,7 +36,7 @@ const RsvpForm = () => {
         const fetchFaculties = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch('https://backend-production-fd6d.up.railway.app/api/faculty-major/faculties', {
+                const response = await fetch('https://localhost:3000/api/faculty-major/faculties', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,

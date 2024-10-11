@@ -1,7 +1,7 @@
 // app/api/auth/route.ts
 import { NextResponse } from 'next/server';
 
-const API_URL = 'backend-production-fd6d.up.railway.app/api/v1/auth/';
+const API_URL = 'localhost:3000/api/v1/auth/';
 
 export async function POST(request: Request) {
     const { username, password, type } = await request.json();

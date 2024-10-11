@@ -16,20 +16,12 @@ const Event = () => {
       <div className="flex flex-col mt-20">
         <Hero />
       </div>
-      <div className="relative">
-        <Image 
-          src="/images/event/mini-games.svg"
-          alt="RSVP Mini Games in Faculty Now!"
-          width={1470}
-          height={600}
-        />
-      </div>
       <div className="flex justify-center mt-2 md:mt-4 lg:mt-6">
         <button
           onClick={handleRSVPClick}
           className="bg-red_primary text-white text-xs font-bold py-2 px-6 md:text-base md:py-2 md:px-6 lg:text-2xl lg:py-4 lg:px-10 rounded"
         >
-          RSVP Now
+          Register Now
         </button>
       </div>
       <div >
