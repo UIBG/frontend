@@ -4,36 +4,42 @@ import { useRouter } from 'next/navigation';
 
 const SelectTournament = () => {
     const [selectedTournament, setSelectedTournament] = useState<string | null>(null);
-    const [tournaments, setTournaments] = useState<any[]>([]);
+    // const [tournaments, setTournaments] = useState<any[]>([]);
     const router = useRouter();
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            router.push('/auth/login');
-        } else {
-            fetchTournaments(token);
-        }
-    }, []);
-
-    const fetchTournaments = async (token: string) => {
-        try {
-            const response = await fetch('https://backend-production-fd6d.up.railway.app/api/tournaments', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (!response.ok) {
-                throw new Error('Failed to fetch tournaments');
-            }
-            const data = await response.json();
-            console.log('Fetched Tournaments:', data);
-            setTournaments(data);
-        } catch (error) {
-            console.error('Error fetching tournaments:', error);
-        }
-    };
+    const tournaments = [
+        { id: 'valorant', name: 'Valorant', link: 'https://forms.gle/okP7k1BEvpgTBbwF6' },
+        { id: 'pubg-mobile', name: 'PUBG Mobile', link: 'https://forms.gle/syREf3rWvi8QdJaY8' },
+        { id: 'mobile-legend', name: 'Mobile Legend', link: 'https://forms.gle/EVH6f8cmDeYFwYGU8' },
+        { id: 'lokapala', name: 'Lokapala', link: 'https://forms.gle/ijieSjdeX4AMJ8Ga8' },
+    ];
+    // useEffect(() => {
+    //     const token = localStorage.getItem('token');
+    //     if (!token) {
+    //         router.push('/auth/login');
+    //     } else {
+    //         fetchTournaments(token);
+    //     }
+    // }, []);
+    //
+    // const fetchTournaments = async (token: string) => {
+    //     try {
+    //         const response = await fetch('https://localhost:3000/api/tournaments', {
+    //             headers: {
+    //                 'Authorization': `Bearer ${token}`,
+    //                 'Content-Type': 'application/json',
+    //             },
+    //         });
+    //         if (!response.ok) {
+    //             throw new Error('Failed to fetch tournaments');
+    //         }
+    //         const data = await response.json();
+    //         console.log('Fetched Tournaments:', data);
+    //         setTournaments(data);
+    //     } catch (error) {
+    //         console.error('Error fetching tournaments:', error);
+    //     }
+    // };
 
     const handleTournamentSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedTournament(event.target.value);
@@ -41,11 +47,22 @@ const SelectTournament = () => {
 
     const handleNext = () => {
         if (selectedTournament) {
-            router.push(`/event/mini-games-faculty/rsvp?tournamentId=${selectedTournament}`);
+            const selectedGame = tournaments.find(tournament => tournament.id === selectedTournament);
+            if (selectedGame) {
+                window.open(selectedGame.link, '_blank'); // Redirect to the corresponding Google Form
+            }
         } else {
             alert('Please select a tournament');
         }
     };
+
+    // const handleNext = () => {
+    //     if (selectedTournament) {
+    //         router.push(`/event/mini-games-faculty/rsvp?tournamentId=${selectedTournament}`);
+    //     } else {
+    //         alert('Please select a tournament');
+    //     }
+    // };
 
     return (
         <div className="flex flex-col items-center justify-center flex-grow py-4 mt-24 mb-4 w-full rsvp-background">
