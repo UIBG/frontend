@@ -10,4 +10,10 @@
 //     );
 // };
 //
+
+const Rsvp = () => {
+    return <div>RSVP Page Content</div>;
+};
+
+export default Rsvp;
 // export default Rsvp;
