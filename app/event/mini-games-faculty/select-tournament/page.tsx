@@ -8,10 +8,10 @@ const SelectTournament = () => {
     const router = useRouter();
 
     const tournaments = [
-        { id: 'valorant', name: 'Valorant', link: 'https://forms.gle/okP7k1BEvpgTBbwF6' },
-        { id: 'pubg-mobile', name: 'PUBG Mobile', link: 'https://forms.gle/syREf3rWvi8QdJaY8' },
-        { id: 'mobile-legend', name: 'Mobile Legend', link: 'https://forms.gle/EVH6f8cmDeYFwYGU8' },
-        { id: 'lokapala', name: 'Lokapala', link: 'https://forms.gle/ijieSjdeX4AMJ8Ga8' },
+        { id: 'valorant', name: 'Valorant', link: 'https://forms.gle/UhgdM47TcwLPwhLaA' },
+        { id: 'pubg-mobile', name: 'PUBG Mobile', link: 'https://forms.gle/zpV98aXTNewJfKKP6' },
+        { id: 'mobile-legend', name: 'Mobile Legend', link: 'https://forms.gle/qPu911kTzEAzE6gy8' },
+        { id: 'lokapala', name: 'Lokapala', link: 'https://forms.gle/qFeagRSeTgCApxLi6' },
     ];
     // useEffect(() => {
     //     const token = localStorage.getItem('token');
