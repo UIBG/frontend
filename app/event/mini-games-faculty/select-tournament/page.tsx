@@ -12,6 +12,7 @@ const SelectTournament = () => {
         { id: 'pubg-mobile', name: 'PUBG Mobile', link: 'https://forms.gle/zpV98aXTNewJfKKP6' },
         { id: 'mobile-legend', name: 'Mobile Legend', link: 'https://forms.gle/qPu911kTzEAzE6gy8' },
         { id: 'lokapala', name: 'Lokapala', link: 'https://forms.gle/qFeagRSeTgCApxLi6' },
+        { id: 'lokapala-solo', name: 'Lokalapa Solo Competition Exhibition', link: 'https://forms.gle/aRSFzYFiVp3NarZRA'}
     ];
     // useEffect(() => {
     //     const token = localStorage.getItem('token');
