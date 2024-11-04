@@ -10,9 +10,7 @@ const SelectTournament = () => {
     const tournaments = [
         { id: 'valorant', name: 'Valorant', link: 'https://forms.gle/UhgdM47TcwLPwhLaA' },
         { id: 'pubg-mobile', name: 'PUBG Mobile', link: 'https://forms.gle/zpV98aXTNewJfKKP6' },
-        { id: 'mobile-legend', name: 'Mobile Legend', link: 'https://forms.gle/jGWQBStans7Sy2u4A' },
         { id: 'lokapala', name: 'Lokapala', link: 'https://forms.gle/qFeagRSeTgCApxLi6' },
-        { id: 'lokapala-solo', name: 'Lokalapa Solo Competition Exhibition', link: 'https://forms.gle/aRSFzYFiVp3NarZRA'}
     ];
     // useEffect(() => {
     //     const token = localStorage.getItem('token');
